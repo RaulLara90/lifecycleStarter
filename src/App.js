@@ -20,27 +20,51 @@ const rightSide = {
 }
 
 const leftSide = {
-  height: '200vh',
-  background: '#D7F2BA',
-  flexGrow: '4'
+  height: '100%',
+  flexGrow: '1'
 }
 
 const section = {
   height: '50vh',
+  background: '#D7F2BA',
   borderBottom: '2px solid white'
 }
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      scroll: 0
+    }
+    this.handleScroll = this.handleScroll.bind(this)
+  }
+
+  componentDidMount () {
+    document.addEventListener('scroll', this.handleScroll, true)
+  }
+
+  handleScroll (e) {
+    const height = e.target.scrollTop
+    this.setState({ scroll: height })
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('scroll', this.handleScroll)
+  }
+
   render () {
+    const { scroll } = this.state
     return (
       <div style={layoutStyles}>
         <div style={leftSide}>
           <div style={section} />
           <div style={section} />
           <div style={section} />
+          <div style={section} />
+          <div style={section} />
         </div>
         <div style={rightSide}>
-          <Avatar />
+          <Avatar scroll={scroll} />
           <Text title>Carlos P. Jimeno</Text>
         </div>
       </div>

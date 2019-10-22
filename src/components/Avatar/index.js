@@ -9,14 +9,19 @@ const basicStyles = {
   background: 'white'
 }
 
-const absoluteStyles = {
-  position: 'absolute',
-  left: '-40px'
-}
-
-const styles = { ...basicStyles, ...absoluteStyles }
-
 export const Avatar = (props) => {
+  const { scroll } = props
+
+  const verticalOffset = 60 + (scroll / 2)
+
+  const absoluteStyles = {
+    position: 'absolute',
+    left: '-60px',
+    top: `calc( 90vh - ${verticalOffset}px)`
+  }
+
+  const styles = { ...basicStyles, ...absoluteStyles }
+
   return (
     <img style={styles} src={avatar} />
   )
