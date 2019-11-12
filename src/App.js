@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text } from './components/Text'
 import { Avatar } from './components/Avatar'
 
@@ -30,46 +30,37 @@ const section = {
   borderBottom: '2px solid white'
 }
 
-class App extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      scroll: 0
+const App = (props) => {
+  const [scroll, setScroll] = useState(0)
+
+  const handler = (e) => {
+    setScroll(e.target.scrollTop)
+  }
+
+  useEffect(() => {
+    document.addEventListener('scroll', handler, true)
+    return () => {
+      document.removeEventListener('scroll', handler)
     }
-    this.handleScroll = this.handleScroll.bind(this)
-  }
+  }, [])
 
-  componentDidMount () {
-    document.addEventListener('scroll', this.handleScroll, true)
-  }
-
-  handleScroll (e) {
-    const height = e.target.scrollTop
-    this.setState({ scroll: height })
-  }
-
-  componentWillUnmount () {
-    document.removeEventListener('scroll', this.handleScroll)
-  }
-
-  render () {
-    const { scroll } = this.state
-    return (
-      <div style={layoutStyles}>
-        <div style={leftSide}>
-          <div style={section} />
-          <div style={section} />
-          <div style={section} />
-          <div style={section} />
-          <div style={section} />
-        </div>
-        <div style={rightSide}>
-          <Avatar scroll={scroll} />
-          <Text title>Carlos P. Jimeno</Text>
-        </div>
+  return (
+    <div style={layoutStyles}>
+      <div style={leftSide}>
+        <div style={section} />
+        <div style={section} />
+        <div style={section} />
+        <div style={section} />
+        <div style={section} />
       </div>
-    )
-  }
+      <div style={rightSide}>
+        <Avatar scroll={scroll} />
+        <Text title>Carlos P. Jimeno</Text>
+      </div>
+    </div>
+  )
 }
+
+//     const height = e.target.scrollTop
 
 export default App
